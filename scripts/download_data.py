@@ -91,6 +91,9 @@ def download_reference(service: str, dest: Path, page: int = 2000) -> None:
             "where": "1=1",
             "outFields": "*",
             "returnGeometry": "true",
+            "outSR": 4326,  # WGS84 lat/lon degrees - the service's native SR is
+                            # Web Mercator (3857); without this the returned
+                            # x/y are projected metres, not usable lat/lon
             "f": "json",
             "resultOffset": offset,
             "resultRecordCount": page,
