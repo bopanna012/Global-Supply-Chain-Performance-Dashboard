@@ -491,4 +491,7 @@ series are muted grey; one highlight colour marks the focus of each chart.
     st.markdown("---")
     c1, c2 = st.columns(2)
     c1.markdown("**Source data:** [portwatch.imf.org](https://portwatch.imf.org/)")
-    c2.markdown("**Repository:** add your GitHub URL here")
+    c2.markdown(
+        "**Repository:** [github.com/bopanna012/Global-Supply-Chain-Performance-Dashboard]"
+        "(https://github.com/bopanna012/Global-Supply-Chain-Performance-Dashboard)"
+    )

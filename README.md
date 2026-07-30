@@ -11,7 +11,7 @@
 > changed was the **routing** — and the ports and economies that absorbed the
 > shift were not randomly distributed.
 
-**[→ Live dashboard](https://YOUR-APP.streamlit.app)** · **[→ Analysis notebook](notebooks/analysis.ipynb)**
+**[→ Live dashboard](https://global-supply-chain-performance-dashboard-7en4lf4cnljnwckrwqeg.streamlit.app/)** · **[→ Analysis notebook](notebooks/analysis.ipynb)**
 
 ---
 
