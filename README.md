@@ -130,10 +130,17 @@ the repo stays lean and the deployed app loads in seconds.
 supply-chain-dashboard/
 ├── app.py                        # Streamlit dashboard (5 tabs)
 ├── requirements.txt
+├── LICENSE                       # MIT
 ├── PROJECT_PLAN.md               # the ten questions + reasoning + schedule
 ├── README.md
 ├── notebooks/
-│   └── analysis.ipynb            # EDA + 10 analytical questions, fully executed
+│   ├── analysis.ipynb            # EDA + 10 analytical questions, fully executed
+│   ├── analysis.html             # HTML export (fully interactive charts)
+│   └── analysis.pdf              # PDF export
+├── presentation/
+│   ├── deck.html / deck.pdf      # slide deck: visuals, insights, conclusions
+│   ├── charts/                   # static chart crops used in the deck
+│   └── snapshots/                # dashboard tab screenshots used in the deck
 ├── src/
 │   ├── theme.py                  # CVD-safe Plotly template + helpers
 │   └── data.py                   # loaders + analytical functions

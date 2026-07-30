@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Global Supply Chain Performance — Presentation</title>
+<style>
+  :root {
+    --ink: #2B2B2B;
+    --ink-soft: #6B6B6B;
+    --bg: #FFFFFF;
+    --dark: #182430;
+    --dark-soft: #9FB0C3;
+    --highlight: #D55E00;   /* vermillion */
+    --highlight2: #0072B2;  /* blue */
+    --orange: #E69F00;
+    --green: #009E73;
+    --context: #BDBDBD;
+    --context-light: #E8E8E8;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; background: #4a4a4a;
+    font-family: 'Segoe UI', Inter, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+  }
+  .slide {
+    width: 1280px; height: 720px;
+    margin: 0 auto;
+    background: var(--bg);
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+    break-after: page;
+    display: flex;
+    flex-direction: column;
+  }
+  .pad { padding: 56px 64px; }
+
+  /* ---- Header block used on content slides ---- */
+  .kicker {
+    font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--highlight); font-weight: 700; margin-bottom: 10px;
+  }
+  h1.slide-title {
+    font-size: 32px; margin: 0 0 6px 0; color: var(--ink); font-weight: 800;
+    line-height: 1.25;
+  }
+  .subtitle { font-size: 16px; color: var(--ink-soft); margin: 0 0 18px 0; }
+  .rule { height: 1px; background: var(--context-light); margin: 0 0 22px 0; }
+
+  /* ---- Dark title / section slides ---- */
+  .slide--dark { background: var(--dark); color: #fff; }
+  .slide--dark .eyebrow {
+    color: var(--dark-soft); letter-spacing: 3px; font-size: 13px;
+    text-transform: uppercase; font-weight: 600;
+  }
+  .slide--dark h1 { font-size: 54px; font-weight: 800; margin: 14px 0 18px 0; line-height: 1.15; }
+  .slide--dark p.lede { font-size: 19px; color: #C9D3DD; max-width: 880px; line-height: 1.55; }
+  .badge-row { display: flex; gap: 14px; margin-top: 34px; }
+  .badge {
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16);
+    color: #fff; padding: 10px 18px; border-radius: 30px; font-size: 14px; font-weight: 600;
+  }
+  .badge.accent { background: var(--highlight); border-color: var(--highlight); }
+
+  /* ---- Stat tiles ---- */
+  .stat-row { display: flex; gap: 22px; margin-top: 8px; }
+  .stat-tile {
+    flex: 1; background: #F7F7F7; border-radius: 10px; padding: 26px 24px 22px;
+    border-left: 4px solid var(--highlight); align-self: flex-start;
+  }
+  .stat-tile.blue { border-left-color: var(--highlight2); }
+  .stat-tile.green { border-left-color: var(--green); }
+  .stat-tile.grey { border-left-color: var(--context); }
+  .stat-num { font-size: 34px; font-weight: 800; color: var(--ink); line-height: 1; }
+  .stat-label { font-size: 13.5px; color: var(--ink-soft); margin-top: 8px; line-height: 1.4; }
+
+  /* ---- Chart slides ---- */
+  .chart-wrap {
+    height: 388px; flex: none; display: flex; align-items: center;
+    justify-content: center; padding: 6px 40px; margin-top: 6px;
+  }
+  .chart-wrap img { max-width: 100%; max-height: 100%; border: 1px solid var(--context-light); border-radius: 6px; }
+  .finding-box {
+    background: #FBF3EC; border-left: 4px solid var(--highlight);
+    padding: 14px 22px; margin: auto 0 0 0; border-radius: 6px;
+    font-size: 14.5px; line-height: 1.5; color: var(--ink);
+  }
+  .finding-box b { color: var(--highlight); }
+  .finding-box.blue { background: #EAF3FA; border-left-color: var(--highlight2); }
+  .finding-box.blue b { color: var(--highlight2); }
+
+  /* ---- Two column ---- */
+  .cols { display: flex; gap: 40px; flex: 1; padding: 0 64px 40px; }
+  .col { flex: 1; }
+  ul.tight { margin: 8px 0; padding-left: 20px; }
+  ul.tight li { margin-bottom: 10px; font-size: 15px; line-height: 1.5; }
+  ul.spacious li { margin-bottom: 26px; font-size: 18px; line-height: 1.6; }
+  table.attr { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+  table.attr th { text-align: left; color: var(--ink-soft); font-weight: 600; padding: 8px 10px; border-bottom: 2px solid var(--context-light); }
+  table.attr td { padding: 10px; border-bottom: 1px solid var(--context-light); }
+  .tag { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 700; color: #fff; }
+  .tag.temporal { background: #B08900; }
+  .tag.spatial { background: var(--highlight2); }
+  .tag.categorical { background: var(--orange); }
+  .tag.numerical { background: var(--ink); }
+
+  /* ---- Snapshot slides ---- */
+  .snap-grid { flex: 1; display: flex; gap: 24px; padding: 0 56px 44px; align-items: center; }
+  .snap-card { flex: 1; }
+  .snap-card img { width: 100%; border: 1px solid var(--context-light); border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+  .snap-cap { font-size: 13.5px; color: var(--ink-soft); margin-top: 10px; text-align: center; }
+
+  .footer-tag {
+    position: absolute; bottom: 22px; right: 64px; font-size: 11.5px; color: var(--context);
+  }
+  .page-num { position: absolute; bottom: 22px; left: 64px; font-size: 11.5px; color: var(--context); }
+
+  .conclusion-item { display: flex; gap: 20px; margin-bottom: 38px; }
+  .conclusion-num {
+    flex: none; width: 42px; height: 42px; border-radius: 50%; background: var(--highlight);
+    color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px;
+  }
+  .conclusion-text { font-size: 18px; line-height: 1.55; padding-top: 6px; }
+  .conclusion-text b { color: var(--ink); }
+
+  a { color: var(--highlight2); }
+</style>
+</head>
+<body>
+
+<!-- 1: TITLE -->
+<section class="slide slide--dark pad">
+  <div class="eyebrow">DATA VISUALIZATION · SUMMER 2026 · FINAL INDIVIDUAL PROJECT</div>
+  <h1>When the World's Shipping<br>Lanes Narrowed</h1>
+  <p class="lede">A data-visualization study of global supply chain performance, 2019&ndash;2026 —
+  built on IMF PortWatch's satellite AIS record of ~90,000 vessels.</p>
+  <div class="badge-row">
+    <div class="badge accent">10 analytical questions</div>
+    <div class="badge">Plotly · publication-ready</div>
+    <div class="badge">Interactive Streamlit dashboard</div>
+  </div>
+  <div style="position:absolute; bottom:56px; left:64px; color:#C9D3DD; font-size:14px;">
+    Yashu Bopanna Pasura Devaiah
+  </div>
+</section>
+
+<!-- 2: EXECUTIVE SUMMARY -->
+<section class="slide pad">
+  <div class="kicker">The story in one sentence</div>
+  <h1 class="slide-title">Trade didn't shrink — it moved, and not evenly</h1>
+  <p class="subtitle">Between late 2023 and 2024, two of the world's four critical maritime chokepoints
+  constricted at the same time: the Red Sea to conflict, the Panama Canal to drought. The satellite
+  record shows exactly how the fleet absorbed it — and who paid the price.</p>
+  <div class="rule"></div>
+  <div class="stat-row">
+    <div class="stat-tile">
+      <div class="stat-num">&minus;62% / &minus;76%</div>
+      <div class="stat-label">Suez &amp; Bab el-Mandeb transit calls fell from baseline — still down
+      roughly half a year+ later</div>
+    </div>
+    <div class="stat-tile blue">
+      <div class="stat-num">+104%</div>
+      <div class="stat-label">Cape of Good Hope traffic vs. its own baseline — the reroute overshot,
+      it didn't just offset</div>
+    </div>
+    <div class="stat-tile green">
+      <div class="stat-num">6.5 months</div>
+      <div class="stat-label">Panama and the Red Sea/Cape corridor were constrained
+      <i>simultaneously</i> — no easy alternative</div>
+    </div>
+    <div class="stat-tile grey">
+      <div class="stat-num">~30%</div>
+      <div class="stat-label">Share of global container calls held by the top 20 ports —
+      flat since 2019, not rising</div>
+    </div>
+  </div>
+  <div style="margin-top:48px; padding-top:28px; border-top:1px solid var(--context-light); color:var(--ink-soft); font-size:15px; line-height:1.6; max-width:920px;">
+    The next ten slides derive each of these numbers from the data — one analytical question at a
+    time, each with its own publication-ready figure and an honestly reported finding, including two
+    null results and one reversed hypothesis.
+  </div>
+</section>
+
+<!-- 3: DATASET -->
+<section class="slide pad">
+  <div class="kicker">Dataset</div>
+  <h1 class="slide-title">IMF PortWatch — real-world, rich, and varied</h1>
+  <p class="subtitle">Daily port-call and trade-volume estimates for 2,065 ports and daily transit counts
+  for 28 major chokepoints, derived from satellite AIS signals broadcast by ~90,000 vessels.
+  Published by the IMF, updated weekly.</p>
+  <div class="cols" style="padding-top:6px;">
+    <div class="col">
+      <table class="attr">
+        <tr><th>Type</th><th>Columns</th></tr>
+        <tr><td><span class="tag temporal">Temporal</span></td><td>date, year, month, day — daily, 2019 → present</td></tr>
+        <tr><td><span class="tag spatial">Spatial</span></td><td>port coordinates, country, ISO3, 28 named chokepoints</td></tr>
+        <tr><td><span class="tag categorical">Categorical</span></td><td>5 cargo classes; port systemic-importance proxy</td></tr>
+        <tr><td><span class="tag numerical">Numerical</span></td><td>port calls, import/export volume, transit capacity</td></tr>
+      </table>
+    </div>
+    <div class="col">
+      <b style="font-size:14.5px;">Secondary sources joined in the analysis</b>
+      <ul class="tight">
+        <li><b>World Bank LPI</b> — logistics quality per country (Q7)</li>
+        <li><b>NY Fed GSCPI</b> — monthly global supply-chain pressure index (Q10)</li>
+      </ul>
+      <div class="finding-box blue" style="margin:18px 0 0 0;">
+        <b>Caveat, stated up front:</b> port calls are observed vessel movements; trade volumes are
+        <i>model-based estimates</i> from vessel type/capacity/draft, not customs records. Every
+        finding here is framed as relative change over time for exactly this reason.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4: METHODOLOGY -->
+<section class="slide pad">
+  <div class="kicker">Methodology</div>
+  <h1 class="slide-title">One shared toolkit, used consistently across all ten questions</h1>
+  <div class="rule"></div>
+  <div class="cols" style="padding:0 0 40px 0;">
+    <div class="col">
+      <b style="font-size:14.5px;">Analytical techniques</b>
+      <ul class="tight">
+        <li><b>Baseline indexing</b> — rebase each series to its own pre-crisis average = 100, so
+        passages of very different size are visually comparable</li>
+        <li><b>Centred rolling smoothing</b> — removes the weekly port-operations cycle without
+        shifting turning points</li>
+        <li><b>Coefficient of variation</b> — ranks volatility across chokepoints of any size</li>
+        <li><b>Recovery half-life</b> — days to climb back to half the post-shock gap</li>
+        <li><b>HHI / top-20 share</b> and <b>lead-lag cross-correlation</b> for concentration and
+        the GSCPI comparison</li>
+      </ul>
+    </div>
+    <div class="col">
+      <b style="font-size:14.5px;">Design system (course requirements)</b>
+      <ul class="tight">
+        <li>Okabe&ndash;Ito <b>CVD-safe palette</b> — one shared Plotly template for every figure</li>
+        <li><b>Muted grey for context</b>, one highlight colour per chart</li>
+        <li>No gridlines, no chart junk, clean white background</li>
+        <li><b>Titles state the takeaway</b> — not the axes</li>
+        <li>Findings reported honestly — including two null results and one reversed hypothesis</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 5: Q1 -->
+<section class="slide pad" style="padding-bottom:0;">
+  <div class="kicker">Q1 · Setting the scene</div>
+  <h1 class="slide-title">Did traffic lost at Suez reappear at the Cape of Good Hope?</h1>
+  <div class="chart-wrap"><img src="charts/q1_suez_cape.png"></div>
+  <div class="finding-box">
+    <b>What we found.</b> Suez and Bab el-Mandeb fell 62% and 76% from baseline and are still running
+    roughly half their pre-crisis level. The Cape didn't just absorb the loss — it overshot it,
+    running at <b>2&times;</b> its own baseline. The offset is not proportional: more Cape transits are
+    needed to move the same cargo one Suez transit used to carry.
+  </div>
+</section>
+
+<!-- 6: Q2 -->
+<section class="slide pad" style="padding-bottom:0;">
+  <div class="kicker">Q2 · Setting the scene</div>
+  <h1 class="slide-title">Did every cargo type reroute the same way?</h1>
+  <div class="chart-wrap"><img src="charts/q2_cargo_mix.png"></div>
+  <div class="finding-box">
+    <b>What we found — the hypothesis didn't survive contact with the data.</b> We expected container
+    traffic to flee first. Instead, <b>Ro-Ro (vehicle carrier) traffic fell hardest, down 93%</b>,
+    while general cargo fell least (&minus;40%). Plausibly, Ro-Ro cargo is both schedule-sensitive and
+    the vessels comparatively exposed to the reported attacks — the strongest incentive to reroute
+    entirely rather than accept the risk.
+  </div>
+</section>
+
+<!-- 7: Q4 -->
+<section class="slide pad" style="padding-bottom:0;">
+  <div class="kicker">Q4 · The shock</div>
+  <h1 class="slide-title">Did Panama and the Red Sea compound each other?</h1>
+  <div class="chart-wrap"><img src="charts/q4_compound.png"></div>
+  <div class="finding-box">
+    <b>What we found.</b> The two disruption windows overlapped for <b>6.5 months</b>
+    (15 Dec 2023 – 30 Jun 2024). Panama transits fell 53% from their pre-drought baseline for the
+    entire overlap, at the same time Suez/Bab el-Mandeb were down 62&ndash;76%. Both of the fastest
+    Asia&ndash;US-East-Coast routes were constrained at once — the crux of the whole story.
+  </div>
+</section>
+
+<!-- 8: Q5 map -->
+<section class="slide pad" style="padding-bottom:0;">
+  <div class="kicker">Q5 · The shock</div>
+  <h1 class="slide-title">Which ports won and lost — and where?</h1>
+  <div class="chart-wrap"><img src="charts/q5_map.png"></div>
+  <div class="finding-box">
+    <b>What we found.</b> The losers are geographically coherent and point straight at the Red Sea:
+    <b>King Abdullah Port (&minus;81%)</b>, <b>Aqaba (&minus;71%)</b>, and <b>Jeddah (&minus;37%)</b> —
+    all Red Sea-facing gateways that lost transiting feeder traffic. Winners cluster on the
+    Mediterranean/Black Sea side (Iskenderun +76%, Mersin +36%, El Sokhna +42%), though not every
+    gainer shares the same cause.
+  </div>
+</section>
+
+<!-- 9: Q6 -->
+<section class="slide pad" style="padding-bottom:0;">
+  <div class="kicker">Q6 · The shock</div>
+  <h1 class="slide-title">Is global container traffic becoming more concentrated?</h1>
+  <div class="chart-wrap"><img src="charts/q6_concentration.png"></div>
+  <div class="finding-box blue">
+    <b>An honest null result.</b> The top-20 ports' share of global container calls is essentially
+    flat — 30.9% in 2019 vs. 31.3% in 2026, drifting inside a narrow 29&ndash;31% band even through
+    the crisis. Concentration didn't rise because of the disruption. But a stable ~30% share sitting
+    in just 20 of ~2,065 ports is itself the finding: that structural exposure never went away.
+  </div>
+</section>
+
+<!-- 10: Q7 -->
+<section class="slide pad" style="padding-bottom:0;">
+  <div class="kicker">Q7 · Who coped</div>
+  <h1 class="slide-title">Does logistics quality buy resilience?</h1>
+  <div class="chart-wrap"><img src="charts/q7_lpi.png"></div>
+  <div class="finding-box">
+    <b>What we found.</b> A weak-to-moderate positive correlation (<b>r = 0.39, n = 17</b>) in the
+    predicted direction — but <b>Singapore</b>, the highest-LPI country in the sample, had the single
+    <b>longest</b> recovery (63 days), plausibly because it's itself a Suez/Bab el-Mandeb transhipment
+    hub. Suggestive at best, not a demonstrated causal link, with one shock and a small sample.
+  </div>
+</section>
+
+<!-- 11: Q8 -->
+<section class="slide pad" style="padding-bottom:0;">
+  <div class="kicker">Q8 · Who coped</div>
+  <h1 class="slide-title">Which economies are most exposed to a single chokepoint?</h1>
+  <div class="chart-wrap"><img src="charts/q8_exposure.png"></div>
+  <div class="finding-box">
+    <b>What we found.</b> The proxy cleanly splits two economy types: small island/coastal economies —
+    French Polynesia, Cayman Islands, Haiti, Puerto Rico (93&ndash;97% import-dependent) — versus
+    resource exporters — Kazakhstan, Russia, Australia (5&ndash;9%). A trade-balance proxy, not a
+    measured routing exposure, but a clear structural pattern regardless.
+  </div>
+</section>
+
+<!-- 12: Q10 -->
+<section class="slide pad" style="padding-bottom:0;">
+  <div class="kicker">Q10 · Who coped</div>
+  <h1 class="slide-title">Does the Fed's supply-chain index track the ships?</h1>
+  <div class="chart-wrap"><img src="charts/q10_gscpi.png"></div>
+  <div class="finding-box blue">
+    <b>What we found.</b> Best-fit lag of <b>+6 months</b>, but only weakly correlated (<b>r = 0.25</b>).
+    GSCPI barely reacts to the chokepoint-level disruption that the AIS data shows clearly around
+    2023&ndash;24 — the survey-based index and the physically observed fleet tell related but
+    distinct stories, not strongly enough to claim either reliably leads the other.
+  </div>
+</section>
+
+<!-- 13: DASHBOARD INTRO -->
+<section class="slide slide--dark pad">
+  <div class="eyebrow">Interactive dashboard</div>
+  <h1 style="font-size:40px;">A curated, five-tab Streamlit dashboard</h1>
+  <p class="lede">Global pulse · Chokepoints · Ports · Resilience · Method &amp; sources — every view
+  responds live to a shared set of filters: date range, cargo type, smoothing window, and disruption
+  event markers.</p>
+  <div class="badge-row">
+    <div class="badge accent">Same CVD-safe palette as the notebook</div>
+    <div class="badge">Live filtering, not static charts</div>
+    <div class="badge">Deployed on Streamlit Community Cloud</div>
+  </div>
+</section>
+
+<!-- 14: SNAPSHOT 1 -->
+<section class="slide pad">
+  <div class="kicker">Dashboard snapshot</div>
+  <h1 class="slide-title">Global pulse &amp; chokepoint comparison</h1>
+  <div class="snap-grid">
+    <div class="snap-card">
+      <img src="snapshots/tab_1_global_pulse.png">
+      <div class="snap-cap">Tab 1 — where the world's ships are calling, plus aggregate transit volume</div>
+    </div>
+    <div class="snap-card">
+      <img src="snapshots/tab_2_chokepoints.png">
+      <div class="snap-cap">Tab 2 — user-selected chokepoints, indexed and compared live</div>
+    </div>
+  </div>
+</section>
+
+<!-- 15: SNAPSHOT 2 -->
+<section class="slide pad">
+  <div class="kicker">Dashboard snapshot</div>
+  <h1 class="slide-title">Port-level winners &amp; losers, on demand</h1>
+  <div class="snap-grid">
+    <div class="snap-card">
+      <img src="snapshots/tab_3_ports.png">
+      <div class="snap-cap">Tab 3 — pick any baseline/comparison window, see the ports that moved</div>
+    </div>
+    <div class="snap-card">
+      <img src="snapshots/tab_4_resilience.png">
+      <div class="snap-cap">Tab 4 — concentration trend and country-level exposure</div>
+    </div>
+  </div>
+</section>
+
+<!-- 16: CONCLUSIONS -->
+<section class="slide pad">
+  <div class="kicker">Conclusions</div>
+  <h1 class="slide-title">One story, told from five directions</h1>
+  <div style="padding-top:8px;">
+    <div class="conclusion-item">
+      <div class="conclusion-num">1</div>
+      <div class="conclusion-text"><b>The shock was real and large</b> — Suez/Bab el-Mandeb fell
+      62&ndash;76% and stayed there.</div>
+    </div>
+    <div class="conclusion-item">
+      <div class="conclusion-num">2</div>
+      <div class="conclusion-text"><b>It was a rerouting, not a contraction</b> — the Cape overshot
+      its baseline; cargo types responded unevenly, overturning our initial hypothesis.</div>
+    </div>
+    <div class="conclusion-item">
+      <div class="conclusion-num">3</div>
+      <div class="conclusion-text"><b>It was unusually hard to escape</b> — Panama and the Red Sea
+      narrowed together for 6.5 months, removing the two fastest alternatives at once.</div>
+    </div>
+    <div class="conclusion-item">
+      <div class="conclusion-num">4</div>
+      <div class="conclusion-text"><b>Costs landed unevenly, along clear geographic lines</b> — while
+      structural concentration in the top-20 ports stayed flat throughout.</div>
+    </div>
+    <div class="conclusion-item">
+      <div class="conclusion-num">5</div>
+      <div class="conclusion-text"><b>Resilience is harder to pin down than the shock itself</b> —
+      logistics quality, port rhythm, and the survey-based pressure index all produced honest,
+      modest, or null results rather than clean answers.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 17: LIMITATIONS -->
+<section class="slide pad">
+  <div class="kicker">Limitations</div>
+  <h1 class="slide-title">What this analysis can't tell you</h1>
+  <ul class="tight spacious" style="padding-top:24px;">
+    <li>PortWatch volumes are <b>AIS-derived estimates</b>, not customs records — every finding is
+    framed as relative change for this reason.</li>
+    <li><b>Vessel counts are not capacity</b> — a shift to fewer, larger ships would understate volume.</li>
+    <li>Event dates shown as shaded bands are drawn from <b>public reporting</b>, used as context,
+    not as data.</li>
+    <li>Q7's correlation is drawn from a <b>single shared shock and n = 17</b> — suggestive, not causal.</li>
+    <li>Q8's exposure measure and Q9's port classification are <b>documented modelling choices</b>,
+    not measured routing assignments.</li>
+  </ul>
+</section>
+
+<!-- 18: LINKS / THANK YOU -->
+<section class="slide slide--dark pad" style="justify-content:center;">
+  <div class="eyebrow">Thank you</div>
+  <h1 style="font-size:44px;">One dataset. Ten questions. One story.</h1>
+  <div style="margin-top:28px; font-size:16px; line-height:2.1;">
+    <div>📓 Analysis notebook &amp; source — <a href="https://github.com/bopanna012/Global-Supply-Chain-Performance-Dashboard" style="color:#8FD0FF;">github.com/bopanna012/Global-Supply-Chain-Performance-Dashboard</a></div>
+    <div>📊 Live dashboard — <a href="#" style="color:#8FD0FF;">[Streamlit Community Cloud URL]</a></div>
+    <div>📄 License — MIT</div>
+    <div>✍️ Author — Yashu Bopanna Pasura Devaiah</div>
+  </div>
+</section>
+
+</body>
+</html>
