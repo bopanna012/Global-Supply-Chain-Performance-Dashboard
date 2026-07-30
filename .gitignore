@@ -1,0 +1,23 @@
+# Raw data is too large for GitHub - rebuild it with scripts/download_data.py
+data/raw/
+*.csv.gz
+
+# Keep the small processed parquet files - the dashboard needs them
+!data/processed/
+!data/processed/*.parquet
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.ipynb_checkpoints/
+
+# iframe_figures/ etc. are transient nbconvert artifacts, not the export itself
+notebooks/iframe_figures/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/settings.json
